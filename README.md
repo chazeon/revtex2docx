@@ -30,7 +30,8 @@ Currently, some issues persists:
 
 ## Roadmap
 
-* Add tests and examples.
+* Add tests and examples (LaTeX source and aux file).
+* Add docx templates based on the LaTeX source.
 
 ## License
 
