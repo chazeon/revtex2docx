@@ -11,8 +11,7 @@ def parse_refs(fname: str) -> Tuple[Dict, Dict]:
 
     soup = read_aux(fname)
     refs = {}  # type: Dict[str, Dict[str, str]]
-    # type: Dict[str, Dict[str, Union[str, TexSoup.data.BraceGroup]]]
-    bibcites = {}
+    bibcites = {} # type: Dict[str, Dict[str, Union[str, TexSoup.data.BraceGroup]]]
 
     for node in soup.contents:
         if isinstance(node, TexSoup.data.TexNode):
