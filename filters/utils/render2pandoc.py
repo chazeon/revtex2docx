@@ -4,7 +4,7 @@ import TexSoup
 def render2pandoc(citeline: str):
     r'''Render a flat tex citation line to a pandoc citation line.
     >>> render2pandoc("Sano\\ \\emph  {et~al.}")
-    [{'t': 'Str', 'c': 'Sano'}, {'t': 'Str', 'c': '\\ '}, {'t': 'Emph', 'c': [{'t': 'Str', 'c': 'et al.'}]}]
+    [{'t': 'Str', 'c': 'Sano'}, {'t': 'Space'}, {'t': 'Emph', 'c': [{'t': 'Str', 'c': 'et al.'}]}]
     '''
 
     soup = TexSoup.TexSoup(citeline)
@@ -20,7 +20,7 @@ def render2pandoc(citeline: str):
                 else:
                     yield walk(content)
             elif isinstance(content, TexSoup.utils.Token):
-                if str(content) == r"\\ ":
+                if str(content) == r"\ ":
                     yield {'t': 'Space'}
                 else:
                     text = str(content)
