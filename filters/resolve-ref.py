@@ -5,33 +5,12 @@ import re
 from pandocfilters import toJSONFilter
 from functools import lru_cache
 from utils.render2pandoc import render2pandoc
-
-REF_REGEX = re.compile(r'^\\newlabel{(.+)}{{(.+)}{(.*)}{(.*)}{(.*)}{(.*)}}$')
-BIBCITE_REGEX = re.compile(
-    r'^\\bibcite\{(.*)\}\{\{(.*)\}\{(.*)\}\{\{(.*)\}\}\{\{(.*)\}\}\}$')
+from utils.aux import parse_refs
 
 
 @lru_cache
 def load_aux(fname: str) -> tuple[dict, dict]:
-    refs = {}
-    bibcites = {}
-    with open(fname) as fp:
-        for line in fp:
-            res = REF_REGEX.search(line)
-
-            if res:
-                refs[res.group(1)] = res.group(2)
-
-            res = BIBCITE_REGEX.search(line)
-            if res:
-                bibcites[res.group(1)] = {
-                    "ref_num": res.group(2),
-                    "year": res.group(3),
-                    "authors_short": res.group(4),
-                    "authors_full": res.group(5),
-                }
-
-    return refs, bibcites
+    return parse_refs(fname)
 
 
 fdebug = open('debug.txt', 'w')
@@ -59,7 +38,7 @@ def resolveRef(key, value, format, meta):
         try:
             if cite_info["citationMode"]['t'] == "AuthorInText":
                 value[1] = [
-                    *render2pandoc(bibcites[cite_info["citationId"]]["authors_short"]),
+                    *render2pandoc(bibcites[cite_info["citationId"]]["authors_short"])[0],
                     {'t': 'Space'},
                     *value[1]
                 ]
