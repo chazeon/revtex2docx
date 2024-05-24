@@ -1,0 +1,11 @@
+--- american-physics-society.csl	2024-05-24 02:50:58
++++ prb.csl	2024-05-24 02:42:24
+@@ -96,7 +96,7 @@
+     <sort>
+       <key variable="citation-number"/>
+     </sort>
+-    <layout delimiter="," prefix="&#160;[" suffix="]">
++    <layout delimiter="," prefix="[" suffix="]">
+       <text variable="citation-number"/>
+     </layout>
+   </citation>
