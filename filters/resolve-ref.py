@@ -45,7 +45,7 @@ def resolveRef(key, value, format, meta):
         # for a citation-reference, it would be empty
         try:
             ref_key = ref_info['reference']
-            value[1][0]['c'] = refs[ref_key].replace('\,', ' ')
+            value[1][0]['c'] = refs[ref_key].replace(r'\,', ' ')
         except Exception as e:
             pass
     
