@@ -10,7 +10,7 @@ REF_REGEX = re.compile(r'^\\newlabel{(.+)}{{(.+)}{(.*)}{(.*)}{(.*)}{(.*)}}$')
 BIBCITE_REGEX = re.compile(r'^\\bibcite\{(.*)\}\{\{(.*)\}\{(.*)\}\{\{(.*)\}\}\{\{(.*)\}\}\}$')
 
 @lru_cache
-def load_aux(fname: str) -> dict:
+def load_aux(fname: str) -> tuple[dict, dict]:
     refs = {}
     bibcites = {}
     with open(fname) as fp:
