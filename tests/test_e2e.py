@@ -36,4 +36,5 @@ def test_e2e(tmpdir):
             "Section III presents the results. Section IV discusses the results.",
             "Section V concludes the paper."
         ]) in text
+        assert 'Vaswani et al.' in text
 
