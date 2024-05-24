@@ -23,12 +23,12 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: "3.12"
-    - name: Install pandoc
+    - name: Install pandoc 3 from deb
       run: |
         sudo apt-get update
-        sudo apt-get install pandoc pandoc-citeproc
+        wget -O pandoc-amd64.deb https://github.com/jgm/pandoc/releases/download/3.2/pandoc-3.2-1-amd64.deb
+        sudo dpkg -i pandoc-amd64.deb
         pandoc --version
-        pandoc --help
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
