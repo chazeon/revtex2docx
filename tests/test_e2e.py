@@ -32,7 +32,7 @@ def test_e2e(tmpdir):
         text = "\n\n".join(blocks)
         print(text)
         assert " ".join([
-            "The text is orginized as follows: Section II describes the methods.",
+            "The text is organized as follows: Section II describes the methods.",
             "Section III presents the results. Section IV discusses the results.",
             "Section V concludes the paper."
         ]) in text
