@@ -1,5 +1,5 @@
 import TexSoup
-from typing import Tuple, Dict, Union
+from typing import Tuple, Dict
 
 
 def read_aux(fname: str) -> TexSoup.data.TexNode:
@@ -10,8 +10,8 @@ def read_aux(fname: str) -> TexSoup.data.TexNode:
 def parse_refs(fname: str) -> Tuple[Dict, Dict]:
 
     soup = read_aux(fname)
-    refs = {}  # type: Dict[str, Dict[str, str]]
-    bibcites = {} # type: Dict[str, Dict[str, Union[str, TexSoup.data.BraceGroup]]]
+    refs = {}       # type: Dict[str, Dict[str, str]]
+    bibcites = {}   # type: Dict[str, Dict[str, str | TexSoup.data.BraceGroup]]
 
     for node in soup.contents:
         if isinstance(node, TexSoup.data.TexNode):
