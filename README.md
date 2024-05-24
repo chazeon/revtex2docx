@@ -1,5 +1,8 @@
 # RevTeX2docx
 
+[![Python tests](https://github.com/chazeon/revtex2docx/actions/workflows/python-tests.yml/badge.svg)](https://github.com/chazeon/revtex2docx/actions/workflows/python-tests.yml)
+[![codecov](https://codecov.io/github/chazeon/revtex2docx/graph/badge.svg?token=KLDNP7JUWE)](https://codecov.io/github/chazeon/revtex2docx)
+
 This repo includes wrapper scripts (currently implemented in [`just`][1] script) and [`pandoc` filters][2] to convert LaTeX files written (especially, in the RevTeX format) to docx files. In addition to `pandoc`'s built-in features, the filters and wrapper scripts are designed to handle the following:
 
 * Cross-reference numbering for equations, figures, tables and titles: this is achieved by reading the `.aux` files generated at LaTeX compile time.
