@@ -27,6 +27,7 @@ Currently, some issues persists:
 * The Equation numbering is not supported.
 * The first paragraph after the equation, will always be indented.
 * The affiliations are not supported.
+* Ubuntu 22.04 LTS still uses `pandoc` 2.x, which does not support the `--citeproc` flag. This is required for the citation and bibliography to be generated correctly. One should use the deb package from the `pandoc` GitHub releases to install the latest version. Alternatively, one can install `the pandoc-citeproc` package and use the `--filter pandoc-citeproc` flag.
 
 ## Roadmap
 
