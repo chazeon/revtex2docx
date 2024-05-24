@@ -4,7 +4,7 @@
 import re
 from pandocfilters import toJSONFilter
 from functools import lru_cache
-from render2pandoc import render2pandoc
+from utils.render2pandoc import render2pandoc
 
 REF_REGEX = re.compile(r'^\\newlabel{(.+)}{{(.+)}{(.*)}{(.*)}{(.*)}{(.*)}}$')
 BIBCITE_REGEX = re.compile(r'^\\bibcite\{(.*)\}\{\{(.*)\}\{(.*)\}\{\{(.*)\}\}\{\{(.*)\}\}\}$')
@@ -35,7 +35,7 @@ fdebug = open('debug.txt', 'w')
 
 def resolveRef(key, value, format, meta):
 
-    refs, bibcites = load_aux('main.aux')
+    refs, bibcites = load_aux('tests/lorem/lorem.aux')
     # fdebug.write(str(bibcites) + '\n')
 
     if key == "Link":
