@@ -18,7 +18,7 @@ def render2pandoc(citeline: str):
                         'c': list(walk(content))
                     }
                 else:
-                    yield walk(content)
+                    yield list(walk(content))
             elif isinstance(content, TexSoup.utils.Token):
                 if str(content) == r"\ ":
                     yield {'t': 'Space'}

@@ -1,5 +1,7 @@
 import subprocess
 import pathlib
+import os
+
 
 def test_e2e(tmpdir):
     test_dir = pathlib.Path(__file__).parent
@@ -11,11 +13,13 @@ def test_e2e(tmpdir):
             '--citeproc',
             '-M', 'reference-section-title=References',
             '--filter', 'filters/resolve-ref.py',
+            '--filter', 'filters/eqn-no.py',
             '-t', 'plain',
             '--eol', 'lf',
             '-o', f'{tmpdir}/output.txt'
         ],
         stdout=subprocess.PIPE,
+        env={'PANDOC_TEX_SOURCE': f'{test_dir}/lorem/lorem.tex', **os.environ},
         universal_newlines=True,
     )
     out, _ = process.communicate()
@@ -37,4 +41,3 @@ def test_e2e(tmpdir):
             "Section V concludes the paper."
         ]) in text
         assert 'Vaswani et al.' in text
-

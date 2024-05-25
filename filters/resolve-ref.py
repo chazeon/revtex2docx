@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
 
-import re
+import os
+import sys
+from pathlib import Path
 from pandocfilters import toJSONFilter
 from functools import lru_cache
 from utils.render2pandoc import render2pandoc
@@ -13,12 +15,16 @@ def load_aux(fname: str) -> tuple[dict, dict]:
     return parse_refs(fname)
 
 
-fdebug = open('debug.txt', 'w')
-
-
 def resolveRef(key, value, format, meta):
 
-    refs, bibcites = load_aux('tests/lorem/lorem.aux')
+    tex_source = os.environ.get('PANDOC_TEX_SOURCE', None)
+    if not tex_source:
+        sys.stderr.write("Error: PANDOC_TEX_SOURCE environment variable not set\n")
+        exit(1)
+
+    aux_fname = Path(tex_source).with_suffix('.aux')
+
+    refs, bibcites = load_aux(aux_fname)
     # fdebug.write(str(bibcites) + '\n')
 
     if key == "Link":
@@ -26,17 +32,19 @@ def resolveRef(key, value, format, meta):
         # for a proper link-reference, the value[0][2] should look like this:
         # {'reference-type': 'ref', 'reference': 'fig:1'}
         # for a citation-reference, it would be empty
-        try:
-            ref_key = ref_info['reference']
-            value[1][0]['c'] = refs[ref_key].replace(r'\,', ' ')
-        except Exception:
-            pass
+        ref_key = ref_info.get('reference', None)
+        if ref_key:
+            value[1][0]['c'] = refs[ref_key]['ref_num']
 
     elif key == "Cite":
         # fix AuthorInText not properly handled by citeproc
         cite_info = value[0][0]
         try:
             if cite_info["citationMode"]['t'] == "AuthorInText":
+
+                sys.stderr.write(str(
+                    render2pandoc(bibcites[cite_info["citationId"]]["authors_short"])
+                ) + '\n')
                 value[1] = [
                     *render2pandoc(bibcites[cite_info["citationId"]]["authors_short"])[0],
                     {'t': 'Space'},
@@ -47,8 +55,8 @@ def resolveRef(key, value, format, meta):
                 # })
                 # value[1].insert(0, )
         except Exception as e:
-            fdebug.write(str(e) + '\n')
-        fdebug.write(str(value) + '\n')
+            sys.stderr.write(str(e) + '\n')
+        sys.stderr.write(str(value) + '\n')
 
 
 if __name__ == "__main__":
