@@ -61,5 +61,3 @@ def resolveRef(key, value, format, meta):
 
 if __name__ == "__main__":
     toJSONFilter(resolveRef)
-
-fdebug.close()
