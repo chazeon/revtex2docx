@@ -1,5 +1,5 @@
 import TexSoup
-from typing import Tuple, Dict
+from typing import Dict
 
 
 def read_aux(fname: str) -> TexSoup.data.TexNode:

@@ -11,7 +11,7 @@ import panflute
 
 def make_resolve_ref(tex_source: str):
 
-    aux_fname = Path(tex_source).with_suffix('.aux')
+    aux_fname = str(Path(tex_source).with_suffix('.aux'))
     refs, bibcites = parse_refs(aux_fname)
 
     def resolve_ref(elem: panflute.Element, doc: panflute.Doc):
@@ -20,7 +20,7 @@ def make_resolve_ref(tex_source: str):
 
         if isinstance(elem, panflute.Link):
             link: panflute.Link = elem
-            ref_attr = link.attributes
+            ref_attr = link.attributes  # type: ignore[attr-defined]
             # for a proper link-reference, ref_attr should look like this:
             # {'reference-type': 'ref', 'reference': 'fig:1'}
             # for a citation-reference, it would be empty
