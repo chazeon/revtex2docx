@@ -1,9 +1,12 @@
 import TexSoup
+from panflute import Str, Space, ListContainer, Emph
 
 
-def render2pandoc(citeline: str):
+def render2pandoc(citeline: str) -> ListContainer:
     r'''Render a flat tex citation line to a pandoc citation line.
-    >>> render2pandoc("Sano\\ \\emph  {et~al.}")
+    >>> render2pandoc("Sano\\ \\emph  {et~al.}").to_json()
+    [{'t': 'Str', 'c': 'Sano'}, {'t': 'Space'}, {'t': 'Emph', 'c': [{'t': 'Str', 'c': 'et al.'}]}]
+    >>> render2pandoc("{Sano\\ \\emph  {et~al.}}").to_json()
     [{'t': 'Str', 'c': 'Sano'}, {'t': 'Space'}, {'t': 'Emph', 'c': [{'t': 'Str', 'c': 'et al.'}]}]
     '''
 
@@ -13,20 +16,18 @@ def render2pandoc(citeline: str):
         for content in soup.contents:
             if isinstance(content, TexSoup.data.TexNode):
                 if content.name == 'emph':
-                    yield {
-                        't': 'Emph',
-                        'c': list(walk(content))
-                    }
+                    yield Emph(*walk(content))
                 else:
-                    yield list(walk(content))
+                    for item in walk(content):
+                        yield item
             elif isinstance(content, TexSoup.utils.Token):
                 if str(content) == r"\ ":
-                    yield {'t': 'Space'}
+                    yield Space()
                 else:
                     text = str(content)
                     text = text.replace('~', ' ')
-                    yield {'t': 'Str', 'c': text}
+                    yield Str(text)
             else:
                 yield content
 
-    return list(walk(soup))
+    return ListContainer(*walk(soup))

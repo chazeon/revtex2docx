@@ -1,6 +1,7 @@
 import subprocess
 import pathlib
 import sys
+import os
 
 
 def main():
@@ -45,6 +46,7 @@ def main():
         ],
         stdout=subprocess.PIPE,
         universal_newlines=True,
+        env={'PANDOC_TEX_SOURCE': str(fntex), **os.environ}
     )
 
     out, err = process.communicate()

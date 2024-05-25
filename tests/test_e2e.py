@@ -16,6 +16,7 @@ def test_e2e(tmpdir):
             '--filter', 'filters/eqn-no.py',
             '-t', 'plain',
             '--eol', 'lf',
+            # '--csl', 'prb.csl',
             '-o', f'{tmpdir}/output.txt'
         ],
         stdout=subprocess.PIPE,
