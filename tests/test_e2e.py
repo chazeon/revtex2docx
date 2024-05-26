@@ -14,6 +14,7 @@ def test_e2e(tmpdir):
             '-M', 'reference-section-title=References',
             '--filter', 'filters/resolve-ref.py',
             '--filter', 'filters/eqn-no.py',
+            '--filter', 'filters/author-block.py',
             '-t', 'plain',
             '--eol', 'lf',
             # '--csl', 'prb.csl',

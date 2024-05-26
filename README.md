@@ -24,12 +24,10 @@ For additional targets, look into the `justfile` script.
 
 ## Known issues
 
-Currently, some issues persists:
+Currently, some issues persist:
 
 * The text replacements in the `just` script are performed with `sed`, the command is written in a way that works with the macOS's `sed` command around the use of `-i` flag. 
-* The Equation numbering is not supported.
 * The first paragraph after the equation, will always be indented.
-* The affiliations are not supported.
 * Ubuntu 22.04 LTS still uses `pandoc` 2.x, which does not support the `--citeproc` flag. This is required for the citation and bibliography to be generated correctly. One should use the deb package from the `pandoc` GitHub releases to install the latest version. Alternatively, one can install `the pandoc-citeproc` package and use the `--filter pandoc-citeproc` flag.
 
 ## Roadmap

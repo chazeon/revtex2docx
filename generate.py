@@ -42,6 +42,7 @@ def main():
             '-M', 'reference-section-title=References',
             '--filter', 'filters/resolve-ref.py',
             '--filter', 'filters/eqn-no.py',
+            '--filter', 'filters/author-block.py',
             *sys.argv[1:]
         ],
         stdout=subprocess.PIPE,
