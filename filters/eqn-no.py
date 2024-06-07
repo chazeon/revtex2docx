@@ -16,8 +16,7 @@ class EquationRegistry:
             if isinstance(node, TexSoup.data.TexNode):
                 if node.name == "document":
                     self._walk(node)
-                # print(node.name)
-                if node.name in {"displaymath", "equation"}:
+                if node.name in {"displaymath", "equation", "equation*", "subequations"}:
                     self.data.append(node)
 
 
@@ -27,18 +26,19 @@ def make_add_eqn_no(tex_source: str):
         soup = TexSoup.TexSoup(f.read())
 
     registry = EquationRegistry(soup)
+
     count = 0
     eqn_no = 1
 
     def add_eqn_no(elem, doc):
         nonlocal count, eqn_no
-        if isinstance(elem, panflute.Math):
-            if registry.data[count].name == "equation":
+        if isinstance(elem, panflute.Math) and elem.format == "DisplayMath":
+            if registry.data[count].name in {"equation", "equation*", "align"}:
                 lines = elem.text.splitlines()
                 lines.append(rf"\qquad ({eqn_no})")
                 elem.text = "\n".join(lines)
+                eqn_no += 1
             count += 1
-            eqn_no += 1
 
     return add_eqn_no
 
